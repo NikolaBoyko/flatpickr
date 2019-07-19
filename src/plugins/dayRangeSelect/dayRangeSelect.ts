@@ -120,19 +120,19 @@ function dayRangeSelectPlugin(config: Config): Plugin<PlusRange> {
             );
         }
       }
+      fp.rangeStartDayFormatted = fp.formatDate(
+        fp.rangeStartDay,
+        fp.config.dateFormat
+      );
+      fp.rangeEndDayFormatted = fp.formatDate(
+        fp.rangeEndDay,
+        fp.config.dateFormat
+      );
       if (
         fp.rangeStartDay !== undefined &&
         fp.rangeEndDay !== undefined &&
         fp.rangeCheckbox.checked
       ) {
-        fp.rangeStartDayFormatted = fp.formatDate(
-          fp.rangeStartDay,
-          fp.config.dateFormat
-        );
-        fp.rangeEndDayFormatted = fp.formatDate(
-          fp.rangeEndDay,
-          fp.config.dateFormat
-        );
         fp.input.value =
           fp.rangeStartDayFormatted + "-" + fp.rangeEndDayFormatted;
       }
