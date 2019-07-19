@@ -4,6 +4,8 @@ import { Plugin } from "../../types/options";
 export type PlusRange = {
   rangeStartDay: Date;
   rangeEndDay: Date;
+  rangeStartDayFormatted: string;
+  rangeEndDayFormatted: string;
   rangeCheckbox: HTMLInputElement;
 };
 
@@ -118,16 +120,21 @@ function dayRangeSelectPlugin(config: Config): Plugin<PlusRange> {
             );
         }
       }
-      //todo добавить форматированые значения дат
       if (
         fp.rangeStartDay !== undefined &&
         fp.rangeEndDay !== undefined &&
         fp.rangeCheckbox.checked
       ) {
+        fp.rangeStartDayFormatted = fp.formatDate(
+          fp.rangeStartDay,
+          fp.config.dateFormat
+        );
+        fp.rangeEndDayFormatted = fp.formatDate(
+          fp.rangeEndDay,
+          fp.config.dateFormat
+        );
         fp.input.value =
-          fp.formatDate(fp.rangeStartDay, fp.config.dateFormat) +
-          "-" +
-          fp.formatDate(fp.rangeEndDay, fp.config.dateFormat);
+          fp.rangeStartDayFormatted + "-" + fp.rangeEndDayFormatted;
       }
     }
 
@@ -153,7 +160,7 @@ function dayRangeSelectPlugin(config: Config): Plugin<PlusRange> {
         '<input class="flatpickr-dayRangeSelect-checkbox" type="checkbox">\n' +
         '<label for="flatpickr-dayRangeSelect-checkbox-label">+-' +
         config.daysAround +
-        " ночи</label>\n";
+        " дня</label>\n";
       let checkboxNode = document.createElement("div");
       checkboxNode.innerHTML = checkboxHtml;
       if (fp.calendarContainer !== undefined) {
@@ -163,6 +170,7 @@ function dayRangeSelectPlugin(config: Config): Plugin<PlusRange> {
           fp.rangeCheckbox.checked = true;
         }
         fp.rangeCheckbox.addEventListener("click", clearRangeSelect);
+        fp.rangeCheckbox.addEventListener("click", clearHover);
       }
     }
 
