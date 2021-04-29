@@ -105,9 +105,11 @@ function dayRangeSelectPlugin(config: Config): Plugin<PlusRange> {
           rangeEndDayIndex = dayIndex + config.daysAround;
         }
         fp.rangeEndDay = (days[rangeEndDayIndex] as DayElement).dateObj;
-      } else {
+      } else if (fp.selectedDateElem !== undefined) {
         fp.rangeStartDay = (day as DayElement).dateObj;
         fp.rangeEndDay = (day as DayElement).dateObj;
+      } else {
+        return;
       }
       if (fp.rangeStartDay !== fp.rangeEndDay) {
         const days = fp.days.childNodes;
